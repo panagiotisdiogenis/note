@@ -28,12 +28,12 @@ function App() {
     return () => unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+console.log(notes)
   return (
     <div className="container mx-auto my-10">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6 p-6 mx-auto">
         <CreateNote createNote={createNote} />
-        {notes.map((note, i) => <Note key={note.id} id={note.id} note={note.text} deleteNote={deleteNote} />)}
+        {notes.map((note, i) => <Note key={note.id} id={note.id} note={note.text} timestamp={note.createdAt} deleteNote={deleteNote} />)}
       </div>
     </div>
   );
