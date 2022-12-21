@@ -6,7 +6,7 @@ import { db } from './firebase-config.js';
 import { collection, doc, addDoc, deleteDoc, updateDoc, onSnapshot, query, orderBy, serverTimestamp } from 'firebase/firestore';
 
 function App() {
-  const [filter, setFilter] = useState(true);
+  const [filter, setFilter] = useState(false);
   const [notes, setNotes] = useState([]);
   const notesCollectionRef = collection(db, 'notes');
 
