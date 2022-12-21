@@ -41,10 +41,14 @@ function App() {
 
   return (
     <div className="container mx-auto my-10">
-      <div className="px-6">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"  className={filter ? "w-6 h-6 text-amber-300 cursor-pointer" : "w-6 h-6 text-[#aaa] cursor-pointer"} onClick={() => setFilter(!filter)}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
-        </svg>
+      <div className="px-6 flow-root">
+        <label className="inline-flex relative items-center cursor-pointer">
+          <input type="checkbox" value="" className="sr-only peer" onClick={() => setFilter(!filter)} />
+          <div className={`w-11 h-6 bg-[#333] peer-focus:outline-none ${filter ? 'peer-focus:ring-4 peer-focus:outline-none peer-focus:ring-amber-600 dark:peer-focus:ring-amber-500' : ''} rounded-full peer dark:bg-[#333] peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-amber-300`}></div>
+        </label>
+        <span className="bg-pink-100 text-pink-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-pink-200 dark:text-pink-900 float-right">Vercel</span>
+        <span className="bg-purple-100 text-purple-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-purple-200 dark:text-purple-900 float-right">Firebase</span>
+        <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 float-right">React.js</span>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6 p-6 mx-auto">
         <CreateNote createNote={createNote} />
