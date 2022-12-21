@@ -5,13 +5,17 @@ function CreateNote({ createNote }) {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      createNote(input);
-      setInput('');
+      if (input.length > 0) {
+        createNote(input);
+        setInput('');
+      }
     }
 
     const handleClick = () => {
-      createNote(input);
-      setInput('');
+      if (input.length > 0) {
+        createNote(input);
+        setInput('');
+      }
     }
 
     return (
