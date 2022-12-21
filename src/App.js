@@ -3,7 +3,7 @@ import CreateNote from './CreateNote';
 import Note from './Note';
 import { useState, useEffect } from 'react';
 import { db } from './firebase-config.js';
-import { collection, doc, addDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp } from 'firebase/firestore';
+import { collection, doc, addDoc, deleteDoc, updateDoc, onSnapshot, query, orderBy, serverTimestamp } from 'firebase/firestore';
 
 function App() {
 
@@ -12,7 +12,16 @@ function App() {
 
   const createNote = async (newNote) => {
     const timestamp = serverTimestamp();
-    await addDoc(notesCollectionRef, { text: newNote, createdAt: timestamp })
+    await addDoc(notesCollectionRef, { text: newNote, createdAt: timestamp, favorite: false })
+  }
+
+  const updateNote = async (id, favorite) => {
+    const noteRef = doc(db, 'notes', id);
+    updateDoc(noteRef, { favorite: !favorite })
+      .then(respoonse => {
+        console.log(respoonse)
+      })
+      .catch(err => console.log(err.message));
   }
 
   const deleteNote = async (id) => {
@@ -28,12 +37,12 @@ function App() {
     return () => unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-console.log(notes)
+
   return (
     <div className="container mx-auto my-10">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6 p-6 mx-auto">
         <CreateNote createNote={createNote} />
-        {notes.map((note, i) => <Note key={note.id} id={note.id} note={note.text} timestamp={note.createdAt} deleteNote={deleteNote} />)}
+        {notes.map((note, i) => <Note key={note.id} id={note.id} note={note.text} favorite={note.favorite} timestamp={note.createdAt} deleteNote={deleteNote} updateNote={updateNote} />)}
       </div>
     </div>
   );
