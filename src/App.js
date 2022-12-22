@@ -1,6 +1,7 @@
 import './App.css';
 import CreateNote from './CreateNote';
 import Labels from './Labels';
+import Like from './Like';
 import Note from './Note';
 import { useState, useEffect } from 'react';
 import { db } from './firebase-config.js';
@@ -19,7 +20,9 @@ import {
 function App() {
   const [filter, setFilter] = useState(false);
   const [notes, setNotes] = useState([]);
+  const [likes, setLikes] = useState({});
   const notesCollectionRef = collection(db, 'notes');
+  const likesCollectionRef = collection(db, 'likes');
 
   const createNote = async (newNote) => {
     const timestamp = serverTimestamp();
@@ -40,13 +43,29 @@ function App() {
     await deleteDoc(noteDoc)
   };
 
+  const updateLikes = async (id) => {
+    const likesRef = doc(db, 'likes', id);
+    updateDoc(likesRef, { count: likes.count + 1 })
+      .then(response => {
+        console.log(response)
+      })
+      .catch(err => console.log(err.message));
+  }
+
   useEffect(() => {
     const option = filter ? 'favorite' : 'createdAt';
     const q = query(notesCollectionRef, orderBy(option, "desc"));
-    const unsubscribe = onSnapshot(q, snapshot => {
+    const unsubscribeNotes = onSnapshot(q, snapshot => {
       setNotes(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
     });
-    return () => unsubscribe();
+    const unsubscribeLikes = onSnapshot(likesCollectionRef, snapshot => {
+      const { count, id } = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }))[0];
+      setLikes(prev => ({ ...prev, count, id }));
+    });
+    return () => {
+      unsubscribeNotes();
+      unsubscribeLikes();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
@@ -74,6 +93,7 @@ function App() {
             updateNote={updateNote}
           />)}
       </div>
+      <Like id={likes.id} likes={likes.count} updateLikes={updateLikes} />
     </div>
   );
 }
