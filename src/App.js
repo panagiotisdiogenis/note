@@ -72,13 +72,15 @@ function App() {
   return (
     <div className="container mx-auto my-10">
       <div className="px-6 flex justify-between">
-        <label className="inline-flex relative cursor-pointer">
-          <input type="checkbox" value="" className="sr-only peer" onClick={() => setFilter(!filter)} />
-          <div className={`w-11 h-6 bg-[#333] peer-focus:outline-none ${filter ? 'peer-focus:ring-4 peer-focus:outline-none peer-focus:ring-amber-600 dark:peer-focus:ring-amber-500' : ''}
-            rounded-full peer dark:bg-[#333] peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px]
-            after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-amber-300`}></div>
-        </label>
-        <Labels />
+				<div className='flex justify-center items-center'>
+					<label className="inline-flex relative cursor-pointer">
+						<input type="checkbox" value="" className="sr-only peer" onClick={() => setFilter(!filter)} />
+						<div className={`w-11 h-6 bg-[#333] peer-focus:outline-none ${filter ? 'peer-focus:ring-4 peer-focus:outline-none peer-focus:ring-amber-600 dark:peer-focus:ring-amber-500' : ''}
+							rounded-full peer dark:bg-[#333] peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px]
+							after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-amber-300`}></div>
+					</label>
+				</div>
+				<Like id={likes.id} likes={likes.count} updateLikes={updateLikes} />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6 p-6 mx-auto">
         <CreateNote createNote={createNote} />
@@ -93,7 +95,7 @@ function App() {
             updateNote={updateNote}
           />)}
       </div>
-      <Like id={likes.id} likes={likes.count} updateLikes={updateLikes} />
+			<Labels />
     </div>
   );
 }
