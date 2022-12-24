@@ -43,8 +43,8 @@ function App() {
     await deleteDoc(noteDoc)
   };
 
-  const updateLikes = async (id) => {
-    const likesRef = doc(db, 'likes', id);
+  const updateLikes = async () => {
+    const likesRef = doc(db, 'likes', likes.id);
     updateDoc(likesRef, { count: likes.count + 1 })
       .then(response => {
         console.log(response)
@@ -80,19 +80,19 @@ function App() {
 							after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-amber-300`}></div>
 					</label>
 				</div>
-				<Like id={likes.id} likes={likes.count} updateLikes={updateLikes} />
+				<Like likes={likes.count} updateLikes={updateLikes} />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6 p-6 mx-auto">
         <CreateNote createNote={createNote} />
         {notes.map((note, i) => 
           <Note
-            key={note.id}
-            id={note.id}
+						key={note.id}
+						id={note.id}
             note={note.text}
             favorite={note.favorite}
             timestamp={note.createdAt}
             deleteNote={deleteNote}
-            updateNote={updateNote}
+            updateNote={() => updateNote(note.id, note.favorite)}
           />)}
       </div>
 			<Labels />

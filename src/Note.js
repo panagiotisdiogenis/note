@@ -26,22 +26,20 @@ function Note({ note, id, deleteNote, timestamp, updateNote, favorite }) {
       }, 500);
     }
 
-    const className = "w-6 h-6 hover:text-amber-300 cursor-pointer";
+    const className = "w-6 h-6 hover:text-amber-300 cursor-pointer absolute bottom-0 right-0 m-3";
 
     return (
-      <div className="container bg-[#333] border-[1px] border-neutral-600/75 text-[#aaa] text-sm h-64 rounded-xl p-4 break-words first-line:uppercase first-line:tracking-widest
+      <div className="relative container bg-[#333] border-[1px] border-neutral-600/75 text-[#aaa] text-sm h-64 rounded-xl p-3 break-words first-line:uppercase first-line:tracking-widest
         first-letter:text-3xl first-letter:font-bold first-letter:text-white first-letter:mr-3 first-letter:float-left overflow-y-auto hover:border-[#aaa] transition
         duration-700 ease-in-out opacity-100" style={{opacity: deleted ? 0 : 1}}>
-        <div className="h-4/5">{note}</div>
-        <div className='container grid grid-cols-5 h-1/6'>
-          <div className='mt-6 text-xs text-center mx-auto col-span-1 hover:text-red-500 cursor-pointer' onClick={handleClick}>Delete</div>
-          <div className="mx-auto invisible xl:visible text-xs col-span-3 text-center mt-6">{getTimeStamp()}</div>
-          <div className='mt-4 text-xs text-center mx-auto col-span-1'>
-            <svg onClick={() => updateNote(id, favorite)} xmlns="http://www.w3.org/2000/svg" fill={favorite ? 'currentColor' : 'none'} viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className={favorite ? `${className} text-amber-300` : className}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-            </svg>
-          </div>
-        </div>
+        <div className="h-4/5 leading-relaxed">{note}</div>
+        <svg xmlns="http://www.w3.org/2000/svg" onClick={handleClick} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 absolute bottom-0 left-0 z-10 m-3 text-xs hover:text-red-500 cursor-pointer text-[#777]">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+        </svg>
+        <div className="absolute bottom-0 inset-x-0 invisible xl:visible text-xs mb-3 text-center text-[#777]">{getTimeStamp()}</div>
+        <svg onClick={updateNote} xmlns="http://www.w3.org/2000/svg" fill={favorite ? 'currentColor' : 'none'} viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className={favorite ? `${className} text-amber-300` : `${className} text-[#777]`}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+        </svg>
       </div>
     );
   }
