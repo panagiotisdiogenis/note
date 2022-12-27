@@ -1,6 +1,6 @@
 import './App.css';
+import Banner from './Banner';
 import CreateNote from './CreateNote';
-import Labels from './Labels';
 import Like from './Like';
 import Note from './Note';
 import { useState, useEffect } from 'react';
@@ -71,6 +71,7 @@ function App() {
 
   return (
     <div className="container mx-auto my-10">
+			<Banner />
       <div className="px-6 flex justify-between">
 				<div className='flex justify-center items-center'>
 					<label className="inline-flex relative cursor-pointer">
@@ -95,7 +96,6 @@ function App() {
             updateNote={() => updateNote(note.id, note.favorite)}
           />)}
       </div>
-			<Labels />
     </div>
   );
 }
