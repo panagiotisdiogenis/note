@@ -1,4 +1,5 @@
 import './App.css';
+import { Analytics } from '@vercel/analytics/react';
 import Banner from './Banner';
 import CreateNote from './CreateNote';
 import Footer from './Footer';
@@ -74,6 +75,7 @@ function App() {
 
   return (
     <div className="container mx-auto my-10">
+			<Analytics />
 			<Banner />
       <div className="px-6 flex justify-between">
 				<form>   
