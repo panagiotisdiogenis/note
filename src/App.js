@@ -19,6 +19,7 @@ import {
 } from 'firebase/firestore';
 
 function App() {
+	const [input, setInput] = useState("");
   const [filter, setFilter] = useState(false);
   const [notes, setNotes] = useState([]);
   const [likes, setLikes] = useState({});
@@ -57,7 +58,8 @@ function App() {
     const option = filter ? 'favorite' : 'createdAt';
     const q = query(notesCollectionRef, orderBy(option, "desc"));
     const unsubscribeNotes = onSnapshot(q, snapshot => {
-      setNotes(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+      setNotes(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }))
+				.filter(note => note.text.toLowerCase().includes(input.toLowerCase())))
     });
     const unsubscribeLikes = onSnapshot(likesCollectionRef, snapshot => {
       const { count, id } = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }))[0];
@@ -68,12 +70,21 @@ function App() {
       unsubscribeLikes();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filter]);
+  }, [filter, input]);
 
   return (
     <div className="container mx-auto my-10">
 			<Banner />
       <div className="px-6 flex justify-between">
+				<form>   
+					<label className="mb-2 text-xs text-gray-900 sr-only text-white">Search</label>
+					<div className="relative">
+							<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+									<svg aria-hidden="true" className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+							</div>
+							<input type="search" value={input} onChange={e => setInput(e.target.value)} className="w-[250px] sm:w-[350px] h-[36px] block w-full p-4 pl-10 text-sm bg-[#333] rounded-lg border border-neutral-600/75 focus:border-neutral-600/75 outline-none focus:ring-transparent focus:ring-[0px] placeholder-gray-400 text-white" placeholder="Search..." />
+					</div>
+				</form>
 				<div className='flex justify-center items-center'>
 					<label className="inline-flex relative cursor-pointer">
 						<input type="checkbox" value="" className="sr-only peer" onClick={() => setFilter(!filter)} />
@@ -82,7 +93,6 @@ function App() {
 							after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-amber-300`}></div>
 					</label>
 				</div>
-				<Like likes={likes.count} updateLikes={updateLikes} />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6 p-6 mx-auto">
         <CreateNote createNote={createNote} />
