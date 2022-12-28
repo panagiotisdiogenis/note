@@ -1,6 +1,7 @@
 import './App.css';
 import Banner from './Banner';
 import CreateNote from './CreateNote';
+import Footer from './Footer';
 import Like from './Like';
 import Note from './Note';
 import { useState, useEffect } from 'react';
@@ -96,6 +97,7 @@ function App() {
             updateNote={() => updateNote(note.id, note.favorite)}
           />)}
       </div>
+			<Footer />
     </div>
   );
 }
